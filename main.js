@@ -13,18 +13,20 @@ var options = {
 }
 
 var factionList = {
-    'FC_GRINEER' : 'Гренки',
-    'FC_INFESTATION' : 'Заражёнка',
-    'FC_CORPUS' : 'Корпусня',
-    'FC_OROKIN' : 'Орокин'
+    'FC_GRINEER' :      'Гренки     ',
+    'FC_INFESTATION' :  'Заражёнка  ',
+    'FC_CORPUS' :       'Корпусня   ',
+    'FC_OROKIN' :       'Орокин     '
 }
 
 var missionTypeList = {
-    'MT_SURVIVAL' : 'Выживалово',
-    'MT_MOBILE_DEFENSE' : 'Мобильная попорона',
-    'MT_CAPTURE' : 'Захват',
-    'MT_EXTERMINATION' : 'Зачистка',
-    'MT_TERRITORY' : 'Перехват',
+    'MT_SURVIVAL' :         'Выживалово         ',
+    'MT_MOBILE_DEFENSE' :   'Мобильная попорона ',
+    'MT_CAPTURE' :          'Захват             ',
+    'MT_EXTERMINATION' :    'Зачистка           ',
+    'MT_TERRITORY' :        'Перехват           ',
+    'MT_INTEL' :            'Шпионаж            ',
+    'MT_RESCUE' :           'Спасение           ',
 }
 
 function alerts() {
@@ -84,18 +86,18 @@ function parse() {
     var serverTime = new Date();
     alertItem = [];
     for (i = 0; i < state['Alerts'].length; i++) {
-        alertItem.push('alert_' + i);
+        /*alertItem.push('alert_' + i);
         alertItem[i].push(['expire'] = state['Alerts'][i]['Expiry']['$date']['$numberLong']);
         alertItem[i].push(['missionType'] = mission(state['Alerts'][i]['MissionInfo']['missionType']));
         alertItem[i].push(['enemy'] = faction(state['Alerts'][i]['MissionInfo']['faction']));
-        alertItem[i].push(['lvl'] = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel']);
+        alertItem[i].push(['lvl'] = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel']);*/
 
-        /*
+        
         var expire = state['Alerts'][i]['Expiry']['$date']['$numberLong'] - serverTime,
             missionType = mission(state['Alerts'][i]['MissionInfo']['missionType']),
             enemy = faction(state['Alerts'][i]['MissionInfo']['faction']);
-            lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'];*/
-        //alertItem.push(missionType + ' ' + enemy + ' ' + lvl + ' осталось: ' + msToTime(expire));
+            lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'];
+        alertItem.push(missionType + ' ' + enemy + ' ' + lvl + ' осталось: ' + msToTime(expire));
     }
 }
 
@@ -107,13 +109,13 @@ bot.on('message', (message) => {
         message.reply('слышь, жуёба, хватит лениться!');
     } else if (message.content == '-l') {
         let content;
-        for (let i = 0; i<alertItem.length; i++) {
+        /*for (let i = 0; i<alertItem.length; i++) {
             
-        }
-        /*
+        }*/
+        
         alertItem.forEach(function(item){
             content += '```' + (item) + '```';
-        });*/
+        });
         message.reply(content);
     }
 });
