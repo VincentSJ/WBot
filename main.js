@@ -2,7 +2,7 @@ const http = require('http');
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const key = require('../key.js');
+const key = require('../key.js'); // You should include your own file with your own discord bot ID
 
 
 var state, alertItem = {};
@@ -20,13 +20,14 @@ var factionList = {
 }
 
 var missionTypeList = {
-    'MT_SURVIVAL' :         'Выживалово         ',
-    'MT_MOBILE_DEFENSE' :   'Мобильная попорона ',
-    'MT_CAPTURE' :          'Захват             ',
-    'MT_EXTERMINATION' :    'Зачистка           ',
-    'MT_TERRITORY' :        'Перехват           ',
-    'MT_INTEL' :            'Шпионаж            ',
-    'MT_RESCUE' :           'Спасение           ',
+    'MT_SURVIVAL' :         'Выживалово     ',
+    'MT_MOBILE_DEFENSE' :   'Моб. оборона   ',
+    'MT_CAPTURE' :          'Захват         ',
+    'MT_EXTERMINATION' :    'Зачистка       ',
+    'MT_TERRITORY' :        'Перехват       ',
+    'MT_INTEL' :            'Шпионаж        ',
+    'MT_RESCUE' :           'Спасение       ',
+    'MT_DEFENSE':           'Оборона        ',
 }
 
 function alerts() {
@@ -96,7 +97,7 @@ function parse() {
         var expire = state['Alerts'][i]['Expiry']['$date']['$numberLong'] - serverTime,
             missionType = mission(state['Alerts'][i]['MissionInfo']['missionType']),
             enemy = faction(state['Alerts'][i]['MissionInfo']['faction']);
-            lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'];
+            lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'] + '   ';
         alertItem.push(missionType + ' ' + enemy + ' ' + lvl + ' осталось: ' + msToTime(expire));
     }
 }
