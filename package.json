@@ -1,0 +1,17 @@
+{
+  "name": "alertsbot",
+  "version": "1.0.0",
+  "description": "Simple allerts notification for discord app",
+  "main": "WrfrmAlert.js",
+  "scripts": {
+    "test": "checking"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "warframe",
+    "alerts"
+  ],
+  "author": "Jah",
+  "license": "ISC"
+}
