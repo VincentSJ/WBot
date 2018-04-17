@@ -105,14 +105,14 @@ bot.on('message', (message) => {
     } else if (message.content == 'meh') {
         message.reply('слышь, жуёба, хватит лениться!');
     } else if (message.content == '-l') {
-        let content;
+        let content = '';
 
         if ( alertItem.length > 0 ) {
             var serverTime = new Date();
             alertItem.forEach(function(item){
                 content += '```' + item[0] + ' ' + item[1] + ' ' + item[2] + ' осталось: ' + msToTime(item[3] - serverTime) + '```';
             });
-            message.reply(content)
+            message.reply(content);
         } else {
             message.reply('```Fetching data from Warframe. Please try again later (in 5-10 seconds)```');
         }
