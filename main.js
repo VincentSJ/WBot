@@ -2,7 +2,7 @@ const http = require('http');
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const key = require('../key.js'); // You should include your own file with your own discord bot ID
+const key = require('../key.js'); // bot private key
 
 
 var state, alertItem = {};

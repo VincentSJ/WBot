@@ -1,6 +1,9 @@
 # WBot
 Warframe allerts bot for discord app
 
+This was intended as a personal project, so it has narrow functionality,
+but the whole concept should be clear enough to make something from it.
+
 WIP
 
 Dependencies:
