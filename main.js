@@ -28,6 +28,7 @@ var missionTypeList = {
     'MT_INTEL' :            'Шпионаж        ',
     'MT_RESCUE' :           'Спасение       ',
     'MT_DEFENSE':           'Оборона        ',
+    'MT_SABOTAGE':          'Саботаж        ',
 }
 
 function alerts() {
@@ -84,21 +85,16 @@ function msToTime(s) {
 }
 
 function parse() {
-    var serverTime = new Date();
     alertItem = [];
+    var temp = [];
     for (i = 0; i < state['Alerts'].length; i++) {
-        /*alertItem.push('alert_' + i);
-        alertItem[i].push(['expire'] = state['Alerts'][i]['Expiry']['$date']['$numberLong']);
-        alertItem[i].push(['missionType'] = mission(state['Alerts'][i]['MissionInfo']['missionType']));
-        alertItem[i].push(['enemy'] = faction(state['Alerts'][i]['MissionInfo']['faction']));
-        alertItem[i].push(['lvl'] = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel']);*/
-
-        
-        var expire = state['Alerts'][i]['Expiry']['$date']['$numberLong'] - serverTime,
+        var expire = state['Alerts'][i]['Expiry']['$date']['$numberLong'],
             missionType = mission(state['Alerts'][i]['MissionInfo']['missionType']),
             enemy = faction(state['Alerts'][i]['MissionInfo']['faction']);
-            lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'] + '   ';
-        alertItem.push(missionType + ' ' + enemy + ' ' + lvl + ' осталось: ' + msToTime(expire));
+            lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'] + '   ',
+            temp.push( missionType, enemy, lvl, expire );
+        alertItem.push( temp );
+        temp = [];
     }
 }
 
@@ -110,14 +106,16 @@ bot.on('message', (message) => {
         message.reply('слышь, жуёба, хватит лениться!');
     } else if (message.content == '-l') {
         let content;
-        /*for (let i = 0; i<alertItem.length; i++) {
-            
-        }*/
-        
-        alertItem.forEach(function(item){
-            content += '```' + (item) + '```';
-        });
-        message.reply(content);
+
+        if ( alertItem.length > 0 ) {
+            var serverTime = new Date();
+            alertItem.forEach(function(item){
+                content += '```' + item[0] + ' ' + item[1] + ' ' + item[2] + ' осталось: ' + msToTime(item[3] - serverTime) + '```';
+            });
+            message.reply(content)
+        } else {
+            message.reply('```Fetching data from Warframe. Please try again later (in 5-10 seconds)```');
+        }
     }
 });
 
