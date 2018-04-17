@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const key = require('../key.js'); // bot private key
 
+const refreshRate = 50000; // fetching warframe data 1 time in refreshRate ms
 
 var state, alertItem = {};
 
@@ -33,6 +34,8 @@ var missionTypeList = {
 
 var missionReward = {
     '/Lotus/Types/Items/MiscItems/ArgonCrystal':    'Кристалл аргона',
+    '/Lotus/Types/Items/MiscItems/Alertium':        'Нитаин',
+    '/Lotus/Types/Items/MiscItems/Gallium':         'Галлий',
 }
 
 function alerts() {
@@ -44,7 +47,7 @@ function alerts() {
         res.on('end', function () {
             state = JSON.parse(data);
             console.log('Complite fetching.');
-            setTimeout(alerts, 30000);
+            setTimeout(alerts, refreshRate);
             parse();
         });
     });
