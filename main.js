@@ -31,6 +31,10 @@ var missionTypeList = {
     'MT_SABOTAGE':          'Саботаж        ',
 }
 
+var missionReward = {
+    '/Lotus/Types/Items/MiscItems/ArgonCrystal':    'Кристалл аргона',
+}
+
 function alerts() {
     var request = http.request(options, function (res) {
         var data = '';
@@ -68,6 +72,14 @@ function mission(m) {
     }
 }
 
+function reward(r) {
+    if ( missionReward[r] ) {
+        return missionReward[r];
+    } else {
+        return r;
+    }
+}
+
 function msToTime(s) {
     var ms = s % 1000;
     s = (s - ms) / 1000;
@@ -77,11 +89,24 @@ function msToTime(s) {
     var hr = (s - min) / 60;
 
     if (hr != 0) {
-        return hr + 'ч ' + min + 'м ' + sec +'с';
+        return hr + 'ч ' + min + 'м ' + sec +'с'
     } else {
-        return min + 'м ' + sec +'с';
+        if (sec <= 0 && min == 0) {
+            return 'expired'
+        } else {
+            return min + 'м ' + sec +'с'
+        }
+        
     }
     
+}
+
+function itemCheck(i) {
+    if ( i ) {
+        return i;
+    } else {
+        return '';
+    }
 }
 
 function parse() {
@@ -92,7 +117,14 @@ function parse() {
             missionType = mission(state['Alerts'][i]['MissionInfo']['missionType']),
             enemy = faction(state['Alerts'][i]['MissionInfo']['faction']);
             lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'] + '   ',
-            temp.push( missionType, enemy, lvl, expire );
+            itemsTemp = reward(state['Alerts'][i]['MissionInfo']['missionReward']['countedItems']),
+            items = [];
+            
+            if ( itemsTemp && itemsTemp.length > 0 ) {
+                items = reward(itemsTemp[0]['ItemType']);
+            }
+
+            temp.push( missionType, enemy, lvl, expire, itemCheck(items) );
         alertItem.push( temp );
         temp = [];
     }
@@ -110,7 +142,7 @@ bot.on('message', (message) => {
         if ( alertItem.length > 0 ) {
             var serverTime = new Date();
             alertItem.forEach(function(item){
-                content += '```' + item[0] + ' ' + item[1] + ' ' + item[2] + ' осталось: ' + msToTime(item[3] - serverTime) + '```';
+                content += '```' + item[0] + ' ' + item[1] + ' ' + item[2] + ' осталось: ' + msToTime(item[3] - serverTime) + '   ' + item[4] + '```';
             });
             message.reply(content);
         } else {
