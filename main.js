@@ -2,11 +2,11 @@ const http = require('http');
 
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const key = require('../key.js'); // bot private key
+const key = require('../key.js'); // bot private key and other stuff
 
-const refreshRate = 50000; // fetching warframe data 1 time in refreshRate ms
+const refreshRate = 20 * 1000; // data fetching frequency
 
-var state, alertItem = {};
+var state, alertItem = {}, alertId = [];
 
 var options = {
     host: 'content.warframe.com',
@@ -36,6 +36,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/ArgonCrystal':    'Кристалл аргона',
     '/Lotus/Types/Items/MiscItems/Alertium':        'Нитаин',
     '/Lotus/Types/Items/MiscItems/Gallium':         'Галлий',
+    '/Lotus/Types/Items/MiscItems/VoidTearDrop':    'Отголоски бездны',
 }
 
 function alerts() {
@@ -116,23 +117,24 @@ function parse() {
     alertItem = [];
     var temp = [];
     for (i = 0; i < state['Alerts'].length; i++) {
-        var expire = state['Alerts'][i]['Expiry']['$date']['$numberLong'],
+        var oid = state['Alerts'][i]['_id']['$oid'],
+            expire = state['Alerts'][i]['Expiry']['$date']['$numberLong'],
             missionType = mission(state['Alerts'][i]['MissionInfo']['missionType']),
             enemy = faction(state['Alerts'][i]['MissionInfo']['faction']);
             lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'] + '   ',
             itemsTemp = reward(state['Alerts'][i]['MissionInfo']['missionReward']['countedItems']),
             items = [];
             
-            if ( itemsTemp && itemsTemp.length > 0 ) {
-                items = reward(itemsTemp[0]['ItemType']);
-            }
+        if ( itemsTemp && itemsTemp.length > 0 ) {
+            items = reward( itemsTemp[0]['ItemType'] );
+        }
 
-            temp.push( missionType, enemy, lvl, expire, itemCheck(items) );
+        temp.push( oid, missionType, enemy, lvl, expire, itemCheck(items) );
         alertItem.push( temp );
         temp = [];
     }
 }
-
+//bot.channels.get(key.data.channel_id()).send('Шеф! Нитаин завезли');
 
 bot.on('message', (message) => {
     if (message.content == '-h') {
@@ -145,7 +147,7 @@ bot.on('message', (message) => {
         if ( alertItem.length > 0 ) {
             var serverTime = new Date();
             alertItem.forEach(function(item){
-                content += '```' + item[0] + ' ' + item[1] + ' ' + item[2] + ' осталось: ' + msToTime(item[3] - serverTime) + '   ' + item[4] + '```';
+                content += '```' + item[1] + ' ' + item[2] + ' ' + item[3] + ' осталось: ' + msToTime(item[4] - serverTime) + '   ' + item[5] + '```';
             });
             message.reply(content);
         } else {
