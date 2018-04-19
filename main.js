@@ -39,7 +39,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Gallium':         'Галлий',
     '/Lotus/Types/Items/MiscItems/VoidTearDrop':    'Отголоски бездны',
     '/Lotus/Types/Items/MiscItems/Eventium':        'Синтула',
-    '/Lotus/Types/Items/MiscItems/Circuits':        'Схема',
+    '/Lotus/Types/Items/MiscItems/Circuits':        'Схемы',
 }
 
 function alerts() {
