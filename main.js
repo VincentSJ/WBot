@@ -30,6 +30,7 @@ var missionTypeList = {
     'MT_RESCUE' :           'Спасение       ',
     'MT_DEFENSE':           'Оборона        ',
     'MT_SABOTAGE':          'Саботаж        ',
+    'MT_RETRIEVAL':         'Налёт          ',
 }
 
 var missionReward = {
@@ -38,6 +39,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Gallium':         'Галлий',
     '/Lotus/Types/Items/MiscItems/VoidTearDrop':    'Отголоски бездны',
     '/Lotus/Types/Items/MiscItems/Eventium':        'Синтула',
+    '/Lotus/Types/Items/MiscItems/Circuits':        'Схема',
 }
 
 function alerts() {
@@ -81,7 +83,7 @@ function reward(r) {
     if ( missionReward[r] ) {
         return missionReward[r];
     } else {
-        bot.channels.get(key.data.channel_id()).send('Неизвестная награда, шеф! ' + r); // Temporarily
+        //bot.channels.get(key.data.channel_id()).send('Неизвестная награда, шеф! ' + r);
         return r;
     }
 }
