@@ -1,8 +1,10 @@
 const http = require('http');
 
+const key = require('../key.js');           // private keys and id
+const ru = require('./translation.js');     // translation info
+
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const key = require('../key.js'); // bot private key and other stuff
 
 const refreshRate = 180 * 1000; // data fetching frequency
 
@@ -11,35 +13,6 @@ var state, alertItem = {}, alertId = [];
 var options = {
     host: 'content.warframe.com',
     path: '/dynamic/worldState.php'
-}
-
-var factionList = {
-    'FC_GRINEER' :      'Гренки     ',
-    'FC_INFESTATION' :  'Заражёнка  ',
-    'FC_CORPUS' :       'Корпусня   ',
-    'FC_OROKIN' :       'Орокин     '
-}
-
-var missionTypeList = {
-    'MT_SURVIVAL' :         'Выживалово     ',
-    'MT_MOBILE_DEFENSE' :   'Моб. оборона   ',
-    'MT_CAPTURE' :          'Захват         ',
-    'MT_EXTERMINATION' :    'Зачистка       ',
-    'MT_TERRITORY' :        'Перехват       ',
-    'MT_INTEL' :            'Шпионаж        ',
-    'MT_RESCUE' :           'Спасение       ',
-    'MT_DEFENSE':           'Оборона        ',
-    'MT_SABOTAGE':          'Саботаж        ',
-    'MT_RETRIEVAL':         'Налёт          ',
-}
-
-var missionReward = {
-    '/Lotus/Types/Items/MiscItems/ArgonCrystal':    'Кристалл аргона',
-    '/Lotus/Types/Items/MiscItems/Alertium':        'Нитаин',
-    '/Lotus/Types/Items/MiscItems/Gallium':         'Галлий',
-    '/Lotus/Types/Items/MiscItems/VoidTearDrop':    'Отголоски бездны',
-    '/Lotus/Types/Items/MiscItems/Eventium':        'Синтула',
-    '/Lotus/Types/Items/MiscItems/Circuits':        'Схемы',
 }
 
 function alerts() {
@@ -64,24 +37,24 @@ function alerts() {
 }
 
 function faction(f) {
-    if ( factionList[f] ) {
-        return factionList[f];
+    if ( ru.factionList[f] ) {
+        return ru.factionList[f];
     } else {
         return f;
     }
 }
 
 function mission(m) {
-    if ( missionTypeList[m] ) {
-        return missionTypeList[m];
+    if ( ru.missionTypeList[m] ) {
+        return ru.missionTypeList[m];
     } else {
         return m;
     }
 }
 
 function reward(r) {
-    if ( missionReward[r] ) {
-        return missionReward[r];
+    if ( ru.missionReward[r] ) {
+        return ru.missionReward[r];
     } else {
         //bot.channels.get(key.data.channel_id()).send('Неизвестная награда, шеф! ' + r);
         return r;
