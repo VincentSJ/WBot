@@ -31,6 +31,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Rubedo':          'Рубедо',
     '/Lotus/Types/Items/MiscItems/Nanospores':      'Наноспоры',
     '/Lotus/Types/Items/MiscItems/OrokinCell':      'Элемент питания орокин',
+    '/Lotus/Types/Items/MiscItems/ControlModule':   'Модуль контроля',
 }
 
 exports.factionList = factionList;

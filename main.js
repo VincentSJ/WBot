@@ -29,7 +29,7 @@ function alerts() {
         });
         res.on('end', function () {
             state = JSON.parse( data );
-            console.log( 'Complite fetching.' );
+            console.log( (new Date()).toLocaleString() + ' Done\n  --->> next update in: ' +  refreshRate/1000 + 's');
             setTimeout( alerts, refreshRate );
             parse();
         });
@@ -39,7 +39,7 @@ function alerts() {
     });
 
     request.end();
-    console.log('Fetching data from warframe.com...');
+    console.log( (new Date()).toLocaleString() + ' Loading data from: ' + options.host + '...');
 }
 
 function faction(f) {
