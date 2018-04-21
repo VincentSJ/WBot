@@ -29,6 +29,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Circuits':        'Схемы',
     '/Lotus/Types/Items/MiscItems/Tellurium':       'Теллуриум',
     '/Lotus/Types/Items/MiscItems/Rubedo':          'Рубедо',
+    '/Lotus/Types/Items/MiscItems/Nanospores':      'Наноспоры',
 }
 
 exports.factionList = factionList;

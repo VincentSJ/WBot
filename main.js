@@ -14,8 +14,7 @@ bot.login( key.data.bot_id() );
 
 var state,
     alertItem = {},
-    alertId = [],
-    unknownMissionReward = unknownMissionType = [];
+    alertId = [];
 
 var options = {
     host: 'content.warframe.com',
