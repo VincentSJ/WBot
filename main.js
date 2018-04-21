@@ -21,6 +21,10 @@ var options = {
     path: '/dynamic/worldState.php'
 }
 
+function _time() {
+    return ( new Date() ).toLocaleString();
+}
+
 function alerts() {
     var request = http.request( options, function (res) {
         var data = '';
@@ -29,17 +33,17 @@ function alerts() {
         });
         res.on('end', function () {
             state = JSON.parse( data );
-            console.log( (new Date()).toLocaleString() + ' Done\n  --->> next update in: ' +  refreshRate/1000 + 's');
+            console.log( _time() + ' Done\n  --->> next update in: ' +  refreshRate/1000 + 's');
             setTimeout( alerts, refreshRate );
             parse();
         });
     });
     request.on('error', function (e) {
-        console.log( e.message );
+        console.log( _time() + ' ' + e.message );
     });
 
     request.end();
-    console.log( (new Date()).toLocaleString() + ' Loading data from: ' + options.host + '...');
+    console.log( _time() + ' Loading data from: ' + options.host + '...');
 }
 
 function faction(f) {
@@ -55,7 +59,7 @@ function mission(m) {
         return ru.missionTypeList[m];
     } else {
         // Valid only till restart. Storing data about untraslated missions type
-        writeToChannel(key.data.channel_id(), '```Хммм, я не знаю такой тип миссии... : ' + r + '```');
+        writeToChannel( key.data.channel_id(), '```Хммм, я не знаю такой тип миссии... : ' + r + '```' );
         ru.missionTypeList[m] = m;
         return m;
     }
@@ -66,7 +70,7 @@ function reward(r) {
         return ru.missionReward[r];
     } else {
         // Valid only till restart. Storing data about untraslated rewards
-        writeToChannel(key.data.channel_id(), '```Непереведённая награда подъехала, шеф! : ' + r + '```');
+        writeToChannel( key.data.channel_id(), '```Непереведённая награда подъехала, шеф! : ' + r + '```' );
         ru.missionReward[r] = r;
         return r;
     }
