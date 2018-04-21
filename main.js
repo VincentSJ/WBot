@@ -3,12 +3,19 @@ const http = require('http');
 const key = require('../key.js');           // private keys and id
 const ru = require('./translation.js');     // translation info
 
+const refreshRate = 180 * 1000; // data fetching frequency
+
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const refreshRate = 180 * 1000; // data fetching frequency
 
-var state, alertItem = {}, alertId = [];
+bot.login( key.data.bot_id() );
+
+
+var state,
+    alertItem = {},
+    alertId = [],
+    unknownMissionReward = unknownMissionType = [];
 
 var options = {
     host: 'content.warframe.com',
@@ -48,6 +55,9 @@ function mission(m) {
     if ( ru.missionTypeList[m] ) {
         return ru.missionTypeList[m];
     } else {
+        // Valid only till restart. Storing data about untraslated missions type
+        writeToChannel(key.data.channel_id(), '```Хммм, я не знаю такой тип миссии... : ' + r + '```');
+        ru.missionTypeList[m] = m;
         return m;
     }
 }
@@ -56,7 +66,9 @@ function reward(r) {
     if ( ru.missionReward[r] ) {
         return ru.missionReward[r];
     } else {
-        //bot.channels.get(key.data.channel_id()).send('Неизвестная награда, шеф! ' + r);
+        // Valid only till restart. Storing data about untraslated rewards
+        writeToChannel(key.data.channel_id(), '```Непереведённая награда подъехала, шеф! : ' + r + '```');
+        ru.missionReward[r] = r;
         return r;
     }
 }
@@ -83,11 +95,15 @@ function msToTime(s) {
 }
 
 function itemCheck(i) {
-    if ( i ) {
+    if (i) {
         return i;
     } else {
         return '';
     }
+}
+
+function writeToChannel( channel, text ) {
+    bot.channels.get( channel ).send( text );
 }
 
 function parse() {
@@ -99,9 +115,9 @@ function parse() {
             missionType = mission( state['Alerts'][i]['MissionInfo']['missionType'] ),
             enemy = faction( state['Alerts'][i]['MissionInfo']['faction'] );
             lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'] + '   ',
-            itemsTemp = reward( state['Alerts'][i]['MissionInfo']['missionReward']['countedItems'] ),
+            itemsTemp = state['Alerts'][i]['MissionInfo']['missionReward']['countedItems'],
             items = [];
-            
+
         if ( itemsTemp && itemsTemp.length > 0 ) {
             items = reward( itemsTemp[0]['ItemType'] );
         }
@@ -132,6 +148,10 @@ bot.on( 'message', ( message ) => {
     }
 });
 
-bot.login( key.data.bot_id() );
 
-alerts();
+// TODO I'm not very happy with this waiting for bot initialising,
+//      but without it there will be an error when trying to message
+//      to a specific channel when needed.
+bot.on('ready', () => {
+    alerts();
+})
