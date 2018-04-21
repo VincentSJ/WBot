@@ -16,6 +16,8 @@ var missionTypeList = {
     'MT_DEFENSE':           'Оборона        ',
     'MT_SABOTAGE':          'Саботаж        ',
     'MT_RETRIEVAL':         'Налёт          ',
+    'MT_EXCAVATE':          'Раскопки       ',
+    'MT_EVACUATION':        'Эвакуация      ',
 }
 
 var missionReward = {
@@ -26,6 +28,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Eventium':        'Синтула',
     '/Lotus/Types/Items/MiscItems/Circuits':        'Схемы',
     '/Lotus/Types/Items/MiscItems/Tellurium':       'Теллуриум',
+    '/Lotus/Types/Items/MiscItems/Rubedo':          'Рубедо',
 }
 
 exports.factionList = factionList;
