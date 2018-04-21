@@ -30,6 +30,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Tellurium':       'Теллуриум',
     '/Lotus/Types/Items/MiscItems/Rubedo':          'Рубедо',
     '/Lotus/Types/Items/MiscItems/Nanospores':      'Наноспоры',
+    '/Lotus/Types/Items/MiscItems/OrokinCell':      'Элемент питания орокин',
 }
 
 exports.factionList = factionList;
