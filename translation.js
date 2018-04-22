@@ -33,6 +33,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/OrokinCell':      'Элемент питания орокин',
     '/Lotus/Types/Items/MiscItems/ControlModule':   'Модуль контроля',
     '/Lotus/Types/Items/MiscItems/AlloyPlate':      'Сплавы',
+    '/Lotus/Types/Items/MiscItems/Ferrite':         'Феррит',
 }
 
 exports.factionList = factionList;
