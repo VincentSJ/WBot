@@ -105,6 +105,14 @@ function itemCheck(i) {
     }
 }
 
+function itemCountCheck(i) {
+    if ( i && typeof(i) == 'number' ) {
+        return ' (' + i + ')'
+    } else {
+        return '';
+    }
+}
+
 function writeToChannel( channel, text ) {
     bot.channels.get( channel ).send( text );
 }
@@ -119,13 +127,15 @@ function parse() {
             enemy = faction( state['Alerts'][i]['MissionInfo']['faction'] );
             lvl = state['Alerts'][i]['MissionInfo']['minEnemyLevel'] + '-' + state['Alerts'][i]['MissionInfo']['maxEnemyLevel'] + '   ',
             itemsTemp = state['Alerts'][i]['MissionInfo']['missionReward']['countedItems'],
-            items = [];
+            items = [],
+            itemCount = [];
 
         if ( itemsTemp && itemsTemp.length > 0 ) {
             items = reward( itemsTemp[0]['ItemType'] );
+            itemCount = itemsTemp[0]['ItemCount'];
         }
 
-        temp.push( oid, missionType, enemy, lvl, expire, itemCheck( items ) );
+        temp.push( oid, missionType, enemy, lvl, expire, itemCheck( items ), itemCountCheck( itemCount ) );
         alertItem.push( temp );
         temp = [];
     }
@@ -142,7 +152,7 @@ bot.on( 'message', ( message ) => {
         if ( alertItem.length > 0 ) {
             var serverTime = new Date();
             alertItem.forEach( function( item ) {
-                content += '```' + item[1] + ' ' + item[2] + ' ' + item[3] + ' осталось: ' + msToTime(item[4] - serverTime) + '   ' + item[5] + '```';
+                content += '```' + item[1] + ' ' + item[2] + ' ' + item[3] + ' осталось: ' + msToTime(item[4] - serverTime) + '   ' + item[5] + item[6] + '```';
             });
             message.reply( content );
         } else {
