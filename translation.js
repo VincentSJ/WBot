@@ -36,6 +36,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Ferrite':         'Феррит',
     '/Lotus/Types/Items/MiscItems/OxiumAlloy':      'Оксиум',
     '/Lotus/Types/Items/MiscItems/Neurode':         'Нейроды',
+    '/Lotus/Types/Items/MiscItems/Salvage':         'Вторсырье',
 }
 
 exports.factionList = factionList;
