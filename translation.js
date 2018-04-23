@@ -37,6 +37,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/OxiumAlloy':      'Оксиум',
     '/Lotus/Types/Items/MiscItems/Neurode':         'Нейроды',
     '/Lotus/Types/Items/MiscItems/Salvage':         'Вторсырье',
+    '/Lotus/Types/Items/MiscItems/NeuralSensor':    'Нейронные датчики',
 }
 
 exports.factionList = factionList;
