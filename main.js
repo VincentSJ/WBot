@@ -59,7 +59,7 @@ function mission(m) {
         return ru.missionTypeList[m];
     } else {
         // Valid only till restart. Storing data about untraslated missions type
-        writeToChannel( key.data.channel_id(), '```Хммм, я не знаю такой тип миссии... : ' + r + '```' );
+        writeToChannel( key.data.channel_id(), '```Хммм, я не знаю такой тип миссии... : ' + m + '```' );
         ru.missionTypeList[m] = m;
         return m;
     }
