@@ -39,6 +39,7 @@ var missionReward = {
     '/Lotus/Types/Items/MiscItems/Salvage':         'Вторсырье',
     '/Lotus/Types/Items/MiscItems/NeuralSensor':    'Нейронные датчики',
     '/Lotus/Types/Items/MiscItems/PolymerBundle':   'Полимеры',
+    '/Lotus/Types/Items/MiscItems/Morphic':         'Морфиды',
 }
 
 exports.factionList = factionList;
