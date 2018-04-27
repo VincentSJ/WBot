@@ -18,6 +18,7 @@ var missionTypeList = {
     'MT_RETRIEVAL':         'Налёт          ',
     'MT_EXCAVATE':          'Раскопки       ',
     'MT_EVACUATION':        'Эвакуация      ',
+    'MT_HIVE':              'Улей           ',
 }
 
 var missionReward = {
