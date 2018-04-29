@@ -92,9 +92,7 @@ function msToTime(s) {
         } else {
             return min + 'м ' + sec +'с'
         }
-
     }
-    
 }
 
 function itemCheck(i) {
@@ -140,31 +138,36 @@ function parse() {
         temp = [];
     }
 }
-
+ 
 bot.on( 'message', ( message ) => {
-    if ( message.content == '-h' ) {
-        message.reply('```Дороу!\nЯ - ВафлБот.\nИ вот что ты можешь попросить меня сделать, дорогой друг.\nТы можешь набрать:\n-l       : и я покажу, чо щас в алертах\n\n\nmore commands in development...\nmaybe...```');
-    } else if ( message.content == 'meh' ) {
-        message.reply('слышь, жуёба, хватит лениться!');
-    } else if ( message.content == '-l' ) {
-        let content = '';
+    switch( message.content ) {
+        case '-h':
+            message.reply('```Дороу!\nЯ - ВафлБот.\nИ вот что ты можешь попросить меня сделать, дорогой друг.\nТы можешь набрать:\n-l       : и я покажу, чо щас в алертах\n-reg     : зарегистрируйся, если хочешь что бы я мониторил что-то конкретно для тебя\n\n\nmore commands in development...\nmaybe...```');
+            break;
+        case '-reg':
+            message.author.send('```Feature is not available yet```');
+            break;
+        case 'meh':
+            message.reply('слышь, жуёба, хватит лениться!');
+        break;
+            case '-l':
+            let content = '';
 
-        if ( alertItem.length > 0 ) {
-            var serverTime = new Date();
-            alertItem.forEach( function( item ) {
-                content += '```' + item[1] + ' ' + item[2] + ' ' + item[3] + ' осталось: ' + msToTime(item[4] - serverTime) + '   ' + item[5] + item[6] + '```';
-            });
-            message.reply( content );
-        } else {
-            message.reply('```Fetching data from Warframe. Please try again later (in 5-10 seconds)```');
-        }
+            if ( alertItem.length > 0 ) {
+                var serverTime = new Date();
+                alertItem.forEach( function( item ) {
+                    content += '```' + item[1] + ' ' + item[2] + ' ' + item[3] + ' осталось: ' + msToTime(item[4] - serverTime) +   '   ' + item[5] + item[6] + '```';
+                });
+                message.reply( content );
+            } else {
+                message.reply('```Fetching data from Warframe. Please try again later (in 5-10 seconds)```');
+            }
+            break;
     }
 });
 
 
-// TODO I'm not very happy with this waiting for bot initialising,
-//      but without it there will be an error when trying to message
-//      to a specific channel when needed.
+// Login first, than run parser and all other stuff
 bot.on('ready', () => {
     alerts();
 })
